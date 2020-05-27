@@ -18,6 +18,8 @@ Display reverse shell syntax for supported languages.
 Are support the following kinds: bash, netcat, java, perl, php, python2, python3, xterm
 
 **SYNOPSIS** 
+
 rscheat [ -i ip:port ] [ -l shell-type ]
-shell-type -l: bash, netcat|nc, java|jar, perl|pl, php, python2|py2, python3|py3, xterm
+
+shell-type -l: `bash`, `netcat`|`nc`, `java`|`jar`, `perl`|`pl`, `php`, `python2`|`py2`, `python3`|`py3`, `xterm`
    
