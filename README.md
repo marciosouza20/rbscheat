@@ -17,11 +17,11 @@ Display reverse shell syntax for supported languages.
 
 `-v`            Version
 
-Are support the following kinds: bash, netcat, java, perl, php, python2, python3, xterm
+Are support the following kinds: bash, netcat, java, perl, php, python2, python3, golang, ruby, awk, xterm.
 
 **SYNOPSIS** 
 
 rscheat [ -i ip:port ] [ -l shell-type ]
 
-shell-type -l: `bash`, `netcat`|`nc`, `java`|`jar`, `perl`|`pl`, `php`, `python`|`py`, `xterm`
+shell-type -l: `bash`, `netcat`|`nc`, `java`|`jar`, `perl`|`pl`, `php`, `python`|`py`, `xterm`, `ruby|rb`, `golang|go`, `awk`
    

