@@ -15,6 +15,8 @@ Display reverse shell syntax for supported languages.
 
 `-l shell-type` The supported reverse shell kind to display syntax
 
+`-v`            Version
+
 Are support the following kinds: bash, netcat, java, perl, php, python2, python3, xterm
 
 **SYNOPSIS** 
