@@ -29,17 +29,18 @@ display_help () {
     echo "Display reverse shell syntax for supported languages."
     echo
     echo -e "\033[1m OPTIONS \033[m"
-    echo "-h            Display this help"
-    echo "-i IP:PORT    The target IP and port to reverse shell connect"
-    echo "-l shell-type The supported reverse shell kind to display syntax"
+    echo "  -h            Display this help"
+    echo "  -i IP:PORT    The target IP and port to reverse shell connect"
+    echo "  -l shell-type The supported reverse shell kind to display syntax"
+    echo "  -v version"
     echo "                                                                  "
     echo -e "Are support the following kinds: \033[1mbash, netcat, java, perl, php, python2, python3, xterm.\033[m"
     echo "                                                                  "       
     echo -e "\033[1m SYNOPSIS \033[m"
-    echo -e "$(basename $0) [ -i ip:port ] [ -l shell-type ]"
-    echo -e "shell-type -l: bash, netcat|nc, java|jar, perl|pl, php, python2|py2, python3|py3, xterm"
+    echo 
+    echo -e "  $(basename $0) [ -i ip:port ] [ -l shell-type ]"
+    echo -e "  shell-type -l: bash, netcat|nc, java|jar, perl|pl, php, python2|py2, python3|py3, xterm"
     echo "                                                                  "
-    echo -e "\n $(basename "$0") version "$VERSION""
 }
 
 
@@ -137,6 +138,9 @@ then
             -h|--help)
                 display_help && exit 0
                 ;;
+	    -v|--version)
+	        echo "$(basename "$0") version "$VERSION"" && exit 0
+		;;
             -i)
                 IP="$(echo $2 | cut -d: -f1)"
                 PORT="$(echo $2 | cut -d: -f2)"
@@ -165,3 +169,4 @@ fi
 
 check_ip "$IP" && check_port "$PORT"
 display_reverse_shell_cheat "$LANGUAGE"
+
