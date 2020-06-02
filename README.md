@@ -27,11 +27,11 @@ rscheat [ -i ip:port ] [ -l shell-type ] [ -b ]
 `-v`            Version
 
 
-Are support the following kinds
+### Are support the following kinds
 
-**Reverse:** bash, netcat, java, perl, php, python2, python3, golang, ruby, awk, xterm.
+   **Reverse:** bash, netcat, java, perl, php, python2, python3, golang, ruby, awk, xterm.
 
-**Bind:** netcat, perl, awk.
+   **Bind:** netcat, perl, awk.
 
 
 
