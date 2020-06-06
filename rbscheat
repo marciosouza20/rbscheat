@@ -200,8 +200,7 @@ then
                 shift 1
 		;;
             -i|--input)
-                IP="$(echo $2 | cut -d: -f1)"
-                PORT="$(echo $2 | cut -d: -f2)"
+                IFS=':' read IP PORT <<< "$2"
                 shift 2
                 ;;
             -l|--language)
