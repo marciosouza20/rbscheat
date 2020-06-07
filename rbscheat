@@ -80,30 +80,17 @@ check_port () {
         fi
 }
 
-display_reverse_shell_cheat () {
-    # Receveid the language and display the correct reverse shell syntax
-    if [ "$#" != 0 ]
-    then
-        lang=$(echo "$1" | tr '[:upper:]' '[:lower:]')
-        if [ -f "data/reverse/$lang" ]; then
-            echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [$lang]\033[m"
-            source "data/reverse/$lang"
-        else
-            display_help && exit 1
-        fi
-    else
-            display_help && exit 1
-    fi
-}
 
-display_bind_shell_cheat () {
+display_cheat () {
     # Receveid the language and display the correct reverse shell syntax
     if [ "$#" != 0 ]
     then
-        lang=$(echo "$1" | tr '[:upper:]' '[:lower:]')
-        if [ -f "data/bind/$lang" ]; then
-            echo -e "\033[31m\033[1mBIND SHELL CHEAT: [$lang]\033[m"
-            source "data/bind/$lang"
+        lang=${1,,}
+        [ $BIND_SHELL == "True" ] && shell="bind" || shell="reverse"
+
+        if [ -f "data/$shell/$lang" ]; then
+            echo -e "\033[31m\033[1m${shell^^} SHELL CHEAT: [$lang]\033[m"
+            source "data/$shell/$lang"
         else
             display_help && exit 1
         fi
@@ -157,7 +144,5 @@ fi
 if [ "$BIND_SHELL" = "False" ]
 then
     check_ip "$IP" && check_port "$PORT"
-    display_reverse_shell_cheat "$LANGUAGE"
-else
-    display_bind_shell_cheat "$LANGUAGE"
 fi
+display_cheat "$LANGUAGE"
