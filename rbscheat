@@ -85,7 +85,7 @@ display_reverse_shell_cheat () {
     if [ "$#" != 0 ]
     then
         lang=$(echo "$1" | tr '[:upper:]' '[:lower:]')
-        if [ -e "data/reverse/$lang" ]; then
+        if [ -f "data/reverse/$lang" ]; then
             echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [$lang]\033[m"
             source "data/reverse/$lang"
         else
@@ -101,7 +101,7 @@ display_bind_shell_cheat () {
     if [ "$#" != 0 ]
     then
         lang=$(echo "$1" | tr '[:upper:]' '[:lower:]')
-        if [ -e "data/bind/$lang" ]; then
+        if [ -f "data/bind/$lang" ]; then
             echo -e "\033[31m\033[1mBIND SHELL CHEAT: [$lang]\033[m"
             source "data/bind/$lang"
         else
