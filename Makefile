@@ -1,7 +1,6 @@
 all:
 
 clean:
-	echo "Removing the rbscheat files..."
 	rm -rf /usr/share/rbscheat
 	rm -rf /usr/bin/rbscheat
 install:
