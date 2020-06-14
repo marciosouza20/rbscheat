@@ -18,6 +18,8 @@
 #
 # Autor: Marcio de Souza Oliveira <marciosouza@debian.org>
 #        Leonardo Braga <leobraga96@gmail.com>
+#        David Polverari
+#        guilhermeglp
 # Licensed by GPL-3
 
 set -e
