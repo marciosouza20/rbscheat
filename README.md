@@ -8,7 +8,7 @@ This is a simple shell script that display the reverse/bind shell syntax based i
 Display reverse shell syntax for supported languages.
 
 
-**SYNOPSIS** 
+**SYNOPSIS**
 
 rscheat [ -i ip:port ] [ -l shell-type ] [ -b ]
 
@@ -36,4 +36,9 @@ rscheat [ -i ip:port ] [ -l shell-type ] [ -b ]
 
 
 shell-type -l: `bash`, `netcat`|`nc`, `java`|`jar`, `perl`|`pl`, `php`, `python`|`py`, `xterm`, `ruby|rb`, `golang|go`, `awk`
-   
+
+### Installation
+
+You can run rbscheat from current reverse-shell-cheat directory. For it just run `./rbscheat options`
+
+For installation in your system, just type `make install` and the rbscheat will be installed in /usr/share/rbscheat directory.
