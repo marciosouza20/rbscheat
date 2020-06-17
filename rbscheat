@@ -15,6 +15,7 @@
 # Changelog:
 # 0.1: Initial version.
 # 0.2: Include bind shell options no cheat
+# 0.3: Refactoring code to move bind shell cheats to data files
 #
 # Autor: Marcio de Souza Oliveira <marciosouza@debian.org>
 #        Leonardo Braga <leobraga96@gmail.com>
@@ -25,7 +26,7 @@
 set -e
 
 #Global Variables
-VERSION='0.2'
+VERSION='0.3'
 USE="Usage: $(basename $0) -i ip:port -l shell-type"
 IP=""
 PORT=""
