@@ -19,8 +19,8 @@
 #
 # Autor: Marcio de Souza Oliveira <marciosouza@debian.org>
 #        Leonardo Braga <leobraga96@gmail.com>
-#        David Polverari
-#        guilhermeglp
+#        David Polverari <david.polverari@gmail.com>
+#        Guilherme <guilhermeglp@gmail.com>
 # Licensed by GPL-3
 
 set -e
