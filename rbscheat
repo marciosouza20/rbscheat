@@ -49,13 +49,13 @@ display_help () {
     echo "  -v version"
     echo "                                                                  "
     echo -e "\033[1m Are support the following kinds\033[m"
-    echo -e "\033[1m Reverse:\033[m bash, netcat, java, perl, php, python2, python3, golang, ruby, awk, xterm.\033[m"
+    echo -e "\033[1m Reverse:\033[m bash, netcat, java, perl, php, python2, python3, golang, ruby, powershell|ps, powercat, socat, awk, xterm.\033[m"
     echo -e "\033[1m Bind:\033[m netcat, perl, awk.\033[m"
     echo "                                                                  "
     echo -e "\033[1m SYNOPSIS \033[m"
     echo
     echo -e "  $(basename $0) [ -i ip:port ] [ -l shell-type ] [-b Bind Shell]"
-    echo -e "  shell-type -l: bash, netcat|nc, java|jar, perl|pl, php, python|py, ruby|rb, golang|go, awk, xterm"
+    echo -e "  shell-type -l: bash, netcat|nc, java|jar, perl|pl, php, python|py, ruby|rb, golang|go, powershell|ps, powercat, awk, xterm"
     echo "                                                                  "
 }
 
