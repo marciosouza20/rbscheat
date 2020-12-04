@@ -29,13 +29,11 @@ rscheat [ -i ip:port ] [ -l shell-type ] [ -b ]
 
 ### Are support the following kinds
 
-   **Reverse:** bash, netcat, java, perl, php, python2, python3, golang, ruby, awk, xterm.
+   **Reverse:** awk, bash, golang, java, netcat, perl, php, powercat, powershell, python, ruby, socat, xterm.
 
-   **Bind:** netcat, perl, awk.
+   **Bind:** awk, netcat, perl, powercat, powershell, xterm.
 
-
-
-shell-type -l: `bash`, `netcat`|`nc`, `java`|`jar`, `perl`|`pl`, `php`, `python`|`py`, `xterm`, `ruby|rb`, `golang|go`, `awk`
+shell-type -l: `awk`, `bash`, `golang|go`, `java`|`jar`, `netcat`|`nc`, `perl`|`pl`, `php`, `powercat`, `powershell`|`ps`, `python`|`py`, `ruby|rb`, `socat`, `xterm`
 
 ### Installation
 
