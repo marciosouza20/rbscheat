@@ -24,6 +24,8 @@ rscheat [ -i ip:port ] [ -l shell-type ] [ -b ]
 
 `-l shell-type` The supported reverse shell kind to display syntax
 
+`-e`    URL encode
+
 `-v`            Version
 
 
