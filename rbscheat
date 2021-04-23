@@ -105,10 +105,10 @@ display_cheat () {
         lang=${1,,}
         [ $BIND_SHELL == "True" ] && shell="bind" || shell="reverse"
 
-        if [ -f "data/$shell/$lang" ]
+        if [ -f "$DATA_DIR/$shell/$lang" ]
         then
             echo -e "\033[31m\033[1m${shell^^} SHELL CHEAT: [$lang]\033[m"
-            tput bold && source "data/$shell/$lang"
+            tput bold && source "$DATA_DIR/$shell/$lang"
         else
             display_help && exit 1
         fi
